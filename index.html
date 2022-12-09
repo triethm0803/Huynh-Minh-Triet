@@ -1,182 +1,205 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-
+<html lang="en" >
+<head>
   <meta charset="UTF-8">
-  
-<link rel="apple-touch-icon" type="image/png" href="https://cpwebassets.codepen.io/assets/favicon/apple-touch-icon-5ae1a0698dcc2402e9712f7d01ed509a57814f994c660df9f7a952f3060705ee.png">
-<meta name="apple-mobile-web-app-title" content="CodePen">
-
-<link rel="shortcut icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
-
-<link rel="mask-icon" type="image/x-icon" href="https://cpwebassets.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg" color="#111">
-
-
-  <title>CodePen - Points (color, animation, rotation.order)</title>
-  
-  
-  
-  
-<style>
-body{
-  overflow: hidden;
-  margin: 0;
-}
-</style>
-
-  <script>
-  window.console = window.console || function(t) {};
-</script>
-
-  
-  
-  <script>
-  if (document.location.search.match(/type=embed/gi)) {
-    window.parent.postMessage("resize", "*");
-  }
-</script>
-
+  <title>Chúc mừng năm mới TDA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="shortcut icon" type="image/png" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/firework-burst-icon-v2.png">
+<link rel="icon" type="image/png" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/firework-burst-icon-v2.png">
+<link rel="apple-touch-icon-precomposed" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/firework-burst-icon-v2.png">
+<meta name="msapplication-TileColor" content="#000000">
+<meta name="msapplication-TileImage" content="https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/firework-burst-icon-v2.png">
+<link href="https://fonts.googleapis.com/css?family=Great Vibes" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="./style.css">
 
 </head>
+<body>
+<!-- partial:index.partial.html -->
+<!-- YOUR CUSTOM MARKUP -->
+  <audio id="audio" controls autoplay hidden loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+<h1><style="text-align:center;"><script type="text/javascript">
+    <!-- Begin
+    function toSpans(span) {
+      var str=span.firstChild.data;
+      var a=str.length;
+      span.removeChild(span.firstChild);
+      for(var i=0; i<a; i++) {
+        var theSpan=document.createElement("SPAN");
+        theSpan.appendChild(document.createTextNode(str.charAt(i)));
+        span.appendChild(theSpan);
+      }
+    }
 
-<body translate="no">
-    <audio id="audio" controls autoplay hidden loop>
-        <source src="music.mp3" type="audio/mpeg">
-    </audio>
+    function RainbowSpan(span, hue, deg, brt, spd, hspd) {
+        this.deg=(deg==null?360:Math.abs(deg));
+        this.hue=(hue==null?0:Math.abs(hue)%360);
+        this.hspd=(hspd==null?3:Math.abs(hspd)%360);
+        this.length=span.firstChild.data.length;
+        this.span=span;
+        this.speed=(spd==null?50:Math.abs(spd));
+        this.hInc=this.deg/this.length;
+        this.brt=(brt==null?255:Math.abs(brt)%256);
+        this.timer=null;
+        toSpans(span);
+        this.moveRainbow();
+    }
+    RainbowSpan.prototype.moveRainbow = function() {
+      if(this.hue>359) this.hue-=360;
+      var color;
+      var b=this.brt;
+      var a=this.length;
+      var h=this.hue;
 
-      <script type="text/javascript">
-        document.addEventListener('click', musicPlay);
-        function musicPlay() {
-            document.getElementById('audio').play();
-            document.removeEventListener('click', musicPlay);
-        }
-      </script>
-  
-    <script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-2c7831bb44f98c1391d6a4ffda0e1fd302503391ca806e7fcc7b9b87197aec26.js"></script>
+      for(var i=0; i<a; i++) {
 
-  
-      <script id="rendered-js" type="module">
-import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
-import { OrbitControls } from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls";
+        if(h>359) h-=360;
 
-console.clear();
+        if(h<60) { color=Math.floor(((h)/60)*b); red=b;grn=color;blu=0; }
+        else if(h<120) { color=Math.floor(((h-60)/60)*b); red=b-color;grn=b;blu=0; }
+        else if(h<180) { color=Math.floor(((h-120)/60)*b); red=0;grn=b;blu=color; }
+        else if(h<240) { color=Math.floor(((h-180)/60)*b); red=0;grn=b-color;blu=b; }
+        else if(h<300) { color=Math.floor(((h-240)/60)*b); red=color;grn=0;blu=b; }
+        else { color=Math.floor(((h-300)/60)*b); red=b;grn=0;blu=b-color; }
 
-let scene = new THREE.Scene();
-scene.background = new THREE.Color(0x160016);
-let camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 1, 1000);
-camera.position.set(0, 4, 21);
-let renderer = new THREE.WebGLRenderer();
-renderer.setSize(innerWidth, innerHeight);
-document.body.appendChild(renderer.domElement);
-window.addEventListener("resize", event => {
-  camera.aspect = innerWidth / innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth, innerHeight);
-});
+        h+=this.hInc;
 
-let controls = new OrbitControls(camera, renderer.domElement);
-controls.enableDamping = true;
-controls.enablePan = false;
-
-let gu = {
-  time: { value: 0 } };
-
-
-let sizes = [];
-let shift = [];
-let pushShift = () => {
-  shift.push(
-  Math.random() * Math.PI,
-  Math.random() * Math.PI * 2,
-  (Math.random() * 0.9 + 0.1) * Math.PI * 0.1,
-  Math.random() * 0.9 + 0.1);
-
-};
-let pts = new Array(50000).fill().map(p => {
-  sizes.push(Math.random() * 1.5 + 0.5);
-  pushShift();
-  return new THREE.Vector3().randomDirection().multiplyScalar(Math.random() * 0.5 + 9.5);
-});
-for (let i = 0; i < 100000; i++) {if (window.CP.shouldStopExecution(0)) break;
-  let r = 10,R = 40;
-  let rand = Math.pow(Math.random(), 1.5);
-  let radius = Math.sqrt(R * R * rand + (1 - rand) * r * r);
-  pts.push(new THREE.Vector3().setFromCylindricalCoords(radius, Math.random() * 2 * Math.PI, (Math.random() - 0.5) * 2));
-  sizes.push(Math.random() * 1.5 + 0.5);
-  pushShift();
-}window.CP.exitedLoop(0);
-
-let g = new THREE.BufferGeometry().setFromPoints(pts);
-g.setAttribute("sizes", new THREE.Float32BufferAttribute(sizes, 1));
-g.setAttribute("shift", new THREE.Float32BufferAttribute(shift, 4));
-let m = new THREE.PointsMaterial({
-  size: 0.125,
-  transparent: true,
-  depthTest: false,
-  blending: THREE.AdditiveBlending,
-  onBeforeCompile: shader => {
-    shader.uniforms.time = gu.time;
-    shader.vertexShader = `
-      uniform float time;
-      attribute float sizes;
-      attribute vec4 shift;
-      varying vec3 vColor;
-      ${shader.vertexShader}
-    `.replace(
-    `gl_PointSize = size;`,
-    `gl_PointSize = size * sizes;`).
-    replace(
-    `#include <color_vertex>`,
-    `#include <color_vertex>
-        float d = length(abs(position) / vec3(40., 10., 40));
-        d = clamp(d, 0., 1.);
-        vColor = mix(vec3(227., 155., 0.), vec3(100., 50., 255.), d) / 255.;
-      `).
-    replace(
-    `#include <begin_vertex>`,
-    `#include <begin_vertex>
-        float t = time;
-        float moveT = mod(shift.x + shift.z * t, PI2);
-        float moveS = mod(shift.y + shift.z * t, PI2);
-        transformed += vec3(cos(moveS) * sin(moveT), cos(moveT), sin(moveS) * sin(moveT)) * shift.a;
-      `);
-
-    console.log(shader.vertexShader);
-    shader.fragmentShader = `
-      varying vec3 vColor;
-      ${shader.fragmentShader}
-    `.replace(
-    `#include <clipping_planes_fragment>`,
-    `#include <clipping_planes_fragment>
-        float d = length(gl_PointCoord.xy - 0.5);
-        //if (d > 0.5) discard;
-      `).
-    replace(
-    `vec4 diffuseColor = vec4( diffuse, opacity );`,
-    `vec4 diffuseColor = vec4( vColor, smoothstep(0.5, 0.1, d)/* * 0.5 + 0.5*/ );`);
-
-    console.log(shader.fragmentShader);
-  } });
-
-let p = new THREE.Points(g, m);
-p.rotation.order = "ZYX";
-p.rotation.z = 0.2;
-scene.add(p);
-
-let clock = new THREE.Clock();
-
-renderer.setAnimationLoop(() => {
-  controls.update();
-  let t = clock.getElapsedTime() * 0.5;
-  gu.time.value = t * Math.PI;
-  p.rotation.y = t * 0.05;
-  renderer.render(scene, camera);
-});
-//# sourceURL=pen.js
+        this.span.childNodes[i].style.color="rgb("+red+", "+grn+", "+blu+")";
+      }
+      this.hue+=this.hspd;
+    }
     </script>
-
+    <h2 id="r1">MỪNG XUÂN QUÝ MÃO 2023</h2>
+    <script type="text/javascript">
+    var r1=document.getElementById("r1"); //get span to apply rainbow
+    var myRainbowSpan=new RainbowSpan(r1, 0, 360, 255, 50, 18); //apply static rainbow effect
+    myRainbowSpan.timer=window.setInterval("myRainbowSpan.moveRainbow()", myRainbowSpan.speed);
+    </script></h1>
+<p>&emsp;</p>
+<p>&emsp;</p>
+<div class="css-typing">
+  <p>
+    Mến gửi đại gia đình TDA!
+  </p>
+  <p>
+	Năm cũ sắp qua, năm mới đang đến gần, trong thời khắc thiêng liêng 
+	những ngày <br/> cuối năm, kính chúc tới toàn thể Lãnh đạo, Cán bộ,
+	Công nhân viên trong cty bước <br/>sang một năm mới với nhiều thành công và hạnh phúc.
+	Chúc công ty ngày một <br/>gắn kết và phát triển vững mạnh, gặt hái nhiều
+	thắng lợi.<br/>
+  </p>
+  <p>
+    Một lần nữa xin chúc mọi người cùng gia đình đón Tết sum vầy, có nhiều<br/>
+	SỨC KHỎE – HẠNH PHÚC – BÌNH AN – THỊNH VƯỢNG.
+  </p>
+ <p>
+	Bình Dương, ngày 31 tháng 12 năm 2022 <br/>
+	&emsp;<br/>
+    &emsp;&emsp;&emsp;&emsp; Huỳnh Minh Triết
+  </p>
   
+</div>
+
+<p> &emsp;</p>
 
 
+<p class="scroll-notice"></p>
+<p class="scroll-notice"></p>
 
+<!-- FIREWORK APP MARKUP -->
+<div class="fireworks-container">
+	<div class="loading-init">
+<!-- 		<div class="loading-init__header">Loading</div> -->
+<!-- 		<div class="loading-init__status">Assembling Shells</div> -->
+	</div>
+	<div class="stage-container remove">
+		<div class="canvas-container">
+			<canvas id="trails-canvas"></canvas>
+			<canvas id="main-canvas"></canvas>
+		</div>
+		<div class="controls">
+			<div class="btn pause-btn">
+				<svg fill="white" width="24" height="24"><use href="#icon-pause" xlink:href="#icon-pause"></use></svg>
+			</div>
+			<div class="btn sound-btn">
+				<svg fill="white" width="24" height="24"><use href="#icon-sound-off" xlink:href="#icon-sound-off"></use></svg>
+			</div>
+			<div class="btn settings-btn">
+				<svg fill="white" width="24" height="24"><use href="#icon-settings" xlink:href="#icon-settings"></use></svg>
+			</div>
+		</div>
+		<div class="menu hide">
+			<div class="menu__inner-wrap">
+				<div class="btn btn--bright close-menu-btn">
+					<svg fill="white" width="24" height="24"><use href="#icon-close" xlink:href="#icon-close"></use></svg>
+				</div>
+				<div class="menu__header">Settings</div>
+				<div class="menu__subheader">For more info, click any label.</div>
+				<form>
+					<div class="form-option form-option--select">
+						<label class="shell-type-label">Shell Type</label>
+						<select class="shell-type"></select>
+					</div>
+					<div class="form-option form-option--select">
+						<label class="shell-size-label">Shell Size</label>
+						<select class="shell-size"></select>
+					</div>
+					<div class="form-option form-option--select">
+						<label class="quality-ui-label">Quality</label>
+						<select class="quality-ui"></select>
+					</div>
+					<div class="form-option form-option--select">
+						<label class="sky-lighting-label">Sky Lighting</label>
+						<select class="sky-lighting"></select>
+					</div>
+					<div class="form-option form-option--select">
+						<label class="scaleFactor-label">Scale</label>
+						<select class="scaleFactor"></select>
+					</div>
+					<div class="form-option form-option--checkbox">
+						<label class="auto-launch-label">Auto Fire</label>
+						<input class="auto-launch" type="checkbox" />
+					</div>
+					<div class="form-option form-option--checkbox form-option--finale-mode">
+						<label class="finale-mode-label">Finale Mode</label>
+						<input class="finale-mode" type="checkbox" />
+					</div>
+					<div class="form-option form-option--checkbox">
+						<label class="hide-controls-label">Hide Controls</label>
+						<input class="hide-controls" type="checkbox" />
+					</div>
+					<div class="form-option form-option--checkbox form-option--fullscreen">
+						<label class="fullscreen-label">Fullscreen</label>
+						<input class="fullscreen" type="checkbox" />
+					</div>
+					<div class="form-option form-option--checkbox">
+						<label class="long-exposure-label">Open Shutter</label>
+						<input class="long-exposure" type="checkbox" />
+					</div>
+				</form>
+				<div class="credits">
+					Passionately built by <a href="https://cmiller.tech/" target="_blank">Caleb Miller</a>.
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="help-modal">
+		<div class="help-modal__overlay"></div>
+		<div class="help-modal__dialog">
+			<div class="help-modal__header"></div>
+			<div class="help-modal__body"></div>
+			<button type="button" class="help-modal__close-btn">Close</button>
+		</div>
+	</div>
+</div>
+<!-- partial -->
+  <script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/fscreen%401.0.1.js'></script>
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/Stage%400.1.4.js'></script>
+<script src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/329180/MyMath.js'></script><script  src="./script.js"></script>
 
- </body></html>
+</body>
+</html>
